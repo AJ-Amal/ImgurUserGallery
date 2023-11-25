@@ -10,9 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @RestController
@@ -66,10 +69,15 @@ public class ImageController {
     @DeleteMapping("/delete/{imageId}")
     public ResponseEntity<String> deleteImageForAuthenticatedUser(@PathVariable Long imageId) {
 
+        String token = getBearerTokenHeader();
         // Delete the specified image for the authenticated user
-        imageService.deleteImage(imageId);
+        imageService.deleteImage(imageId,token);
         log.info("Image deleted successfully for user: {}", imageId);
         return ResponseEntity.ok("Image deleted successfully");
+    }
+
+    private static String getBearerTokenHeader() {
+        return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest().getHeader("Authorization");
     }
 
 

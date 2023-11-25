@@ -53,10 +53,10 @@ public class ImgurApiService {
         }
     }
 
-    public void deleteImage(String imageUrl) {
+    public void deleteImage(String imageUrl, String token) {
         try {
             HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization", "Client-ID " + clientId);
+            headers.set("Authorization", token);
 
             HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
@@ -72,6 +72,7 @@ public class ImgurApiService {
     }
 
     private String extractImageId(String imageUrl) {
-        return imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+        String deletehash = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+        return deletehash.substring(0, deletehash.length() - 4);
     }
 }
