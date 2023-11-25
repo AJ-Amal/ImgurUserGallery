@@ -10,5 +10,5 @@ public interface ImageService {
 
     List<Image> getImagesByUsername(String username);
 
-    void deleteImage(Long imageId);
+    void deleteImage(Long imageId, String token);
 }

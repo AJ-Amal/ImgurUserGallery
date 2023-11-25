@@ -44,11 +44,11 @@ public class ImageServiceImpl implements ImageService{
     }
 
     @Override
-    public void deleteImage(Long imageId) {
+    public void deleteImage(Long imageId, String token) {
         // Retrieve the image by ID
         Image image = imageRepository.findById(imageId)
                 .orElseThrow(() -> new ImageNotFoundException("Image not found"));
-        imgurApiService.deleteImage(image.getImageUrl());
+        imgurApiService.deleteImage(image.getImageUrl(),token);
 
         // Delete image from the database
         imageRepository.delete(image);
