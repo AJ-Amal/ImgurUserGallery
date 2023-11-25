@@ -15,6 +15,8 @@ public class Image {
     @JoinColumn(name = "user_id")
     private User user;
 
+
+    // Constructors, getters, and setters
     public Image() {
         // Default constructor
     }
