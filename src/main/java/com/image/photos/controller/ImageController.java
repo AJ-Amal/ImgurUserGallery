@@ -28,20 +28,19 @@ public class ImageController {
     @Autowired
     private UserServiceImpl userService;
 
+
+    // Endpoint to get upload user image
     @PostMapping("/upload/{username}")
     public ResponseEntity<String> uploadImage(@PathVariable String username, @RequestParam("file") MultipartFile file) {
 
         /*if (!authenticateUser(username, authorizationHeader)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: Invalid credentials or user not found");
         }*/
-
         try {
             // Upload image to Imgur and get the Imgur URL
             String imgurUrl = imgurApiService.uploadImage(file);
-
             // Save the Imgur URL associated with the user
             imageService.saveImageForUser(username, imgurUrl);
-
             log.info("Image uploaded successfully for user: {}", username);
             return ResponseEntity.ok("Image uploaded successfully");
         } catch (Exception e) {
@@ -51,23 +50,28 @@ public class ImageController {
         }
     }
 
+
+    // Endpoint to view updated list of images with the user profile
     @GetMapping("/view/{username}")
     public ResponseEntity<List<Image>> viewImages(@PathVariable String username) {
 
         // Retrieve images for the authenticated user
         List<Image> userImages = imageService.getImagesByUsername(username);
-
+        log.info("Image Retrieved successfully for user: {}", username);
         return ResponseEntity.ok(userImages);
     }
 
+
+    // Endpoint to delete user image
     @DeleteMapping("/delete/{imageId}")
     public ResponseEntity<String> deleteImageForAuthenticatedUser(@PathVariable Long imageId) {
 
         // Delete the specified image for the authenticated user
         imageService.deleteImage(imageId);
-
+        log.info("Image deleted successfully for user: {}", imageId);
         return ResponseEntity.ok("Image deleted successfully");
     }
+
 
     /*private boolean authenticateUser(String username, String authorizationHeader) {
         // Extract username and password from the authorization header (you may use Spring Security for this)

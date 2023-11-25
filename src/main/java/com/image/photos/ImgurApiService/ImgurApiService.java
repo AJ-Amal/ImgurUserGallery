@@ -2,6 +2,7 @@ package com.image.photos.ImgurApiService;
 
 import com.image.photos.ImgurApiService.api.ImgurApiResponse;
 import com.image.photos.exception.ImgurApiException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+@Slf4j
 @Service
 public class ImgurApiService {
 
